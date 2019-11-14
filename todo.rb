@@ -66,13 +66,17 @@ end
 
 # Return an error message if the name is invalid. Return nil if name is valid.
 def error_for_todo(name)
-  if !(1..100).cover? name.size
+  if !(1..100).cover?(name.size)
     "Todo must be between 1 and 100 characters."
   end
 end
 
 before do
   @storage = DatabasePersistence.new(logger)
+end
+
+after do
+  @storage.disconnect
 end
 
 get "/" do
